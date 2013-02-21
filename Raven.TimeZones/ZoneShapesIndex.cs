@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
 
 namespace Raven.TimeZones
@@ -11,7 +12,7 @@ namespace Raven.TimeZones
                             select new
                                 {
                                     shape.Zone,
-                                    _ = SpatialGenerate("location", shape.Shape)
+                                    _ = SpatialGenerate("location", shape.Shape, SpatialSearchStrategy.GeohashPrefixTree, 3)
                                 };
         }
     }
