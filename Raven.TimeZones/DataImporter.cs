@@ -59,7 +59,7 @@ namespace Raven.TimeZones
                     var wkt = writer.Write((Geometry) geometry);
 
                     var zoneShape = new ZoneShape { Zone = zone, Shape = wkt };
-                    bulkInsert.Store(zoneShape, "ZoneShapes/" + i);
+                    bulkInsert.Store(zoneShape, "ZoneShapes/" + (i + 1));
                 }
 
                 sw.Stop();
