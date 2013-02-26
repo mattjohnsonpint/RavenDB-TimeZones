@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using DotSpatial.Data;
 using DotSpatial.Topology;
+using DotSpatial.Topology.Simplify;
 using DotSpatial.Topology.Utilities;
 using Raven.Abstractions.Data;
 using Raven.Client;
@@ -49,14 +50,38 @@ namespace Raven.TimeZones
             {
                 var writer = new WktWriter();
                 var numRows = fs.NumRows();
+
                 for (int i = 0; i < numRows; i++)
                 {
                     var shape = fs.GetShape(i, false);
 
                     var zone = (string) shape.Attributes[0];
+                    if (zone.Equals("uninhabited", StringComparison.OrdinalIgnoreCase))
+                        continue;
 
+                    // Get the shape as a geometry.
                     var geometry = shape.ToGeometry();
-                    var wkt = writer.Write((Geometry) geometry);
+
+                    // Simplify the geometry.
+                    IGeometry simplified = null;
+                    if (geometry.Area < 0.1)
+                    {
+                        // For very small regions, use a convex hull.
+                        simplified = geometry.ConvexHull();
+                    }
+                    else
+                    {
+                        // Simplify the polygon if necessary. Reduce the tolerance incrementally until we have a valid polygon.
+                        var tolerance = 0.05;
+                        while (simplified == null || !(simplified is Polygon) || !simplified.IsValid || simplified.IsEmpty)
+                        {
+                            simplified = TopologyPreservingSimplifier.Simplify(geometry, tolerance);
+                            tolerance -= 0.005;
+                        }
+                    }
+
+                    // Convert it to WKT.
+                    var wkt = writer.Write((Geometry) simplified);
 
                     var zoneShape = new ZoneShape { Zone = zone, Shape = wkt };
                     bulkInsert.Store(zoneShape, "ZoneShapes/" + (i + 1));
