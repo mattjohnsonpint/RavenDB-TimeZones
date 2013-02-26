@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Raven.Abstractions.Indexing;
 using Raven.Client;
@@ -29,9 +30,14 @@ namespace Raven.TimeZones
             // note: WKT uses lon/lat ordering
             var point = string.Format(CultureInfo.InvariantCulture, "POINT ({0} {1})", longitude, latitude);
 
-            var result = session.Query<ZoneShape>()
+            var results = session.Query<ZoneShape>()
                                 .Customize(x => x.RelatesToShape("location", point, SpatialRelation.Intersects))
-                                .FirstOrDefault();
+                                .ToList();
+
+            foreach (var x in results)
+                Debug.WriteLine(x.Zone);
+
+            var result = results.FirstOrDefault();
 
             return result == null ? null : result.Zone;
         }
