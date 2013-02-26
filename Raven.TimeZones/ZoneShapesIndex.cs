@@ -12,7 +12,7 @@ namespace Raven.TimeZones
                             select new
                                 {
                                     shape.Zone,
-                                    _ = SpatialGenerate("location", shape.Shape, SpatialSearchStrategy.GeohashPrefixTree, 3)
+                                    _ = SpatialGenerate("location", shape.Shape, SpatialSearchStrategy.GeohashPrefixTree, 5)
                                 };
         }
     }
