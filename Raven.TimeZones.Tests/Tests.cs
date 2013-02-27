@@ -27,26 +27,20 @@ namespace Raven.TimeZones.Tests
                     Debug.WriteLine("Zones were previously imported.");
                 }
 
-                // when debugging, pause here to watch in raven studio
-                WaitForUserToContinueTheTest(documentStore);
-
                 var sw = new Stopwatch();
                 WaitForIndexing(documentStore);
                 Debug.WriteLine("Indexing completed in {0} ms.", sw.ElapsedMilliseconds);
 
-                using (var sesion = documentStore.OpenSession())
+                using (var session = documentStore.OpenSession())
                 {
                     sw.Restart();
                     
-                    var zone = sesion.GetZoneForLocation(33.45, -112.066667); // Phoenix, Arizona, USA
+                    var zone = session.GetZoneForLocation(33.45, -112.066667); // Phoenix, Arizona, USA
                     
                     Debug.WriteLine("Query took {0} ms.", sw.ElapsedMilliseconds);
 
                     Assert.Equal("America/Phoenix", zone);
                 }
-
-                // when debugging, pause here to watch in raven studio
-                WaitForUserToContinueTheTest(documentStore);
             }
         }
     }
