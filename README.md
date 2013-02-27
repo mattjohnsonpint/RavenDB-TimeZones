@@ -1,7 +1,7 @@
 Raven.TimeZones
 ===============
 
-Provides a geospatial index of [IANA/Olson Timezones][1] of the world.
+Provides a geospatial index of [IANA/Olson time zones][1] of the world - using RavenDB.
 
 Basically, given a latitude and longitude, you can determine the correct timezone.
 
