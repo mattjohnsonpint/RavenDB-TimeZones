@@ -30,6 +30,7 @@ Special thanks to:
  - Use Simon's [Geo library][5].
  - Try implementing as GeoJSON or some other format than WKT.
  - Performance testing.
+ - NuGet package.
 
  [1]: http://www.iana.org/time-zones
  [2]: http://efele.net/maps/tz/world/
