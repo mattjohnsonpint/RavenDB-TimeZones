@@ -30,7 +30,7 @@ namespace Raven.TimeZones
             // note: WKT uses lon/lat ordering
             var point = string.Format(CultureInfo.InvariantCulture, "POINT ({0} {1})", longitude, latitude);
 
-            var results = session.Query<ZoneShape>()
+            var results = session.Query<ZoneShape, ZoneShapesIndex>()
                                 .Customize(x => x.RelatesToShape("location", point, SpatialRelation.Intersects))
                                 .ToList();
 
