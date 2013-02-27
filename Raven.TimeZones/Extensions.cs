@@ -10,7 +10,12 @@ namespace Raven.TimeZones
     {
         public static void InitializeTimeZones(this IDocumentStore documentStore)
         {
-            documentStore.ExecuteIndex(new ZoneShapesIndex());
+            var index = new ZoneShapesIndex();
+            documentStore.ExecuteIndex(index);
+
+            // Query once to initialize spatial stuff.  Take the hit now to prevent delay on first query later.
+            using (var session = documentStore.OpenSession())
+                session.GetZoneForLocation(0, 0);
         }
 
         public static void ImportTimeZoneShapes(this IDocumentStore documentStore, string databaseName, string shapefilePath, bool replaceExistingShapes = false)
