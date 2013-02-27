@@ -3,7 +3,9 @@ Raven.TimeZones
 
 Provides a geospatial index of [IANA/Olson time zones][1] of the world - using RavenDB.
 
-Basically, given a latitude and longitude, you can determine the correct timezone.
+Basically, given a latitude and longitude, you can determine the correct timezone on this map:
+
+![World Time Zone Map](http://efele.net/maps/tz/world/tz_world.png)
 
 ## Usage ##
 
