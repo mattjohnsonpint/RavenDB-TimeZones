@@ -5,7 +5,7 @@ Provides a geospatial index of [IANA/Olson Timezones][1] of the world.
 
 Basically, given a latitude and longitude, you can determine the correct timezone.
 
-== Usage ==
+## Usage ##
 
     // Set up the index.  Do this after your main .Initialize() call.
     documentStore.InitializeTimeZones();
@@ -18,14 +18,14 @@ Basically, given a latitude and longitude, you can determine the correct timezon
 
 A unit test, and the shapefile, are both in the repository.
 
-== Acknowledgements ==
+## Acknowledgements ##
 
 Special thanks to:
  - Eric Muller, for the [source data][2].
  - Andrew Lin, for the inspiration from his excellent [javascript timezone picker][3].
  - Simon Bartlett, for his help [when I got stuck][4].
 
-==== TODO ====
+## TODO ##
  - Download the shapefile data automatically over http from the original source.
  - Use Simon's [Geo library][5].
  - Try implementing as GeoJSON or some other format than WKT.
