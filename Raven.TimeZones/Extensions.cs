@@ -36,8 +36,8 @@ namespace Raven.TimeZones
             var point = string.Format(CultureInfo.InvariantCulture, "POINT ({0} {1})", longitude, latitude);
 
             var results = session.Query<ZoneShape, ZoneShapesIndex>()
-                                .Customize(x => x.RelatesToShape("location", point, SpatialRelation.Intersects))
-                                .ToList();
+                                 .Customize(x => x.RelatesToShape("location", point, SpatialRelation.Intersects))
+                                 .ToList();
 
             foreach (var x in results)
                 Debug.WriteLine(x.Zone);
