@@ -18,8 +18,8 @@ namespace Raven.TimeZones.Tests
 
                 try
                 {
-                    // Import the timezone shapes.  Source: http://efele.net/maps/tz/world/
-                    documentStore.ImportTimeZoneShapes(@".\Data\Shapes\tz_world.shp");
+                    // Import the timezone shapes.  For this test, just import the USA.  Source: http://efele.net/maps/tz/us/
+                    documentStore.ImportTimeZoneShapes(@".\Data\Shapes\tz_us.shp");
                 }
                 catch (InvalidOperationException)
                 {
