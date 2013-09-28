@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
 
 namespace Raven.TimeZones
@@ -10,10 +9,12 @@ namespace Raven.TimeZones
         {
             Map = shapes => from shape in shapes
                             select new
-                                {
-                                    shape.Zone,
-                                    _ = SpatialGenerate("location", shape.Shape, SpatialSearchStrategy.GeohashPrefixTree, 5)
-                                };
+                            {
+                                shape.Zone,
+                                shape.Shape
+                            };
+
+            Spatial(x => x.Shape, options => options.Geography.GeohashPrefixTreeIndex(5));
         }
     }
 }

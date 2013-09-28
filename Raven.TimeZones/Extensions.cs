@@ -1,7 +1,5 @@
-﻿using System.Diagnostics;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
-using Raven.Abstractions.Indexing;
 using Raven.Client;
 
 namespace Raven.TimeZones
@@ -36,11 +34,8 @@ namespace Raven.TimeZones
             var point = string.Format(CultureInfo.InvariantCulture, "POINT ({0} {1})", longitude, latitude);
 
             var results = session.Query<ZoneShape, ZoneShapesIndex>()
-                                 .Customize(x => x.RelatesToShape("location", point, SpatialRelation.Intersects))
+                                 .Spatial(x=> x.Shape, criteria => criteria.Intersects(point))
                                  .ToList();
-
-            foreach (var x in results)
-                Debug.WriteLine(x.Zone);
 
             var result = results.FirstOrDefault();
 
